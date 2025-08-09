@@ -1,6 +1,7 @@
 package com.demo.models;
 
 import com.demo.exceptions.DineroInsuficienteException;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -10,7 +11,10 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @EqualsAndHashCode
 @Builder
+@Entity(name = "cuentas")
 public class Cuenta {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String persona;
     private BigDecimal saldo;
@@ -26,5 +30,4 @@ public class Cuenta {
     public void credito(BigDecimal monto) {
         this.saldo = saldo.add(monto);
     }
-
 }

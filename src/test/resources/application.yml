@@ -3,7 +3,8 @@ logging:
     root: OFF
     org:
       springframework: OFF
-
+      # Habilita las consutas en consola
+      hibernate.sql: debug
 spring:
   main:
     banner-mode: OFF

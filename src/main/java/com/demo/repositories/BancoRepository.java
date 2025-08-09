@@ -1,14 +1,10 @@
 package com.demo.repositories;
 
 import com.demo.models.Banco;
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface BancoRepository {
-    Banco findById(Long id);
-
-    List<Banco> findAll();
-
-    void update(Banco banco);
-
+@Repository
+public interface BancoRepository extends JpaRepository<Banco, Long> {
 }
 

@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static com.demo.Datos.*;
 
-@SpringBootTest(classes = com.demo.SpringBootTestApplication.class)
+@SpringBootTest
 class SpringBootTestApplicationTests {
 
     @Mock
@@ -27,7 +27,6 @@ class SpringBootTestApplicationTests {
 
     @InjectMocks
     CuentaServiceImpl cuentaService;
-
 
 
     @Test
@@ -56,9 +55,9 @@ class SpringBootTestApplicationTests {
         verify(cuentaRepository, times(3)).findById(1L);
         verify(cuentaRepository, times(3)).findById(2L);
 
-        verify(cuentaRepository, times(2)).update(any(Cuenta.class));
+        verify(cuentaRepository, times(2)).save(any(Cuenta.class));
         verify(bancoRepository, times(2)).findById(1L);
-        verify(bancoRepository).update(any(Banco.class));
+        verify(bancoRepository).save(any(Banco.class));
         verify(cuentaRepository, times(6)).findById(anyLong());
         verify(cuentaRepository, never()).findAll();
     }
@@ -92,23 +91,21 @@ class SpringBootTestApplicationTests {
         verify(cuentaRepository, times(3)).findById(1L);
         verify(cuentaRepository, times(2)).findById(2L);
         //never() -> verifica que nunca se ejecute
-        verify(cuentaRepository, never()).update(any(Cuenta.class));
+        verify(cuentaRepository, never()).save(any(Cuenta.class));
         verify(bancoRepository, times(2)).findById(1L);
         verify(cuentaRepository, times(5)).findById(anyLong());
         verify(cuentaRepository, never()).findAll();
-        verify(bancoRepository).update(any(Banco.class));
+        verify(bancoRepository).save(any(Banco.class));
 
     }
 
 
     @Test
     void contextLoad3() {
+        when(cuentaRepository.findById(1L)).thenReturn(crearCuenta001());
         Cuenta cuenta1 = cuentaService.findById(1L);
         Cuenta cuenta2 = cuentaService.findById(1L);
-        //Verifica que sea el mismo objeto
-//        System.out.println(cuenta1);
         assertSame(cuenta1, cuenta2);
-//        assertEquals("Ryan", cuenta1.getPersona());
         verify(cuentaRepository, times(2)).findById(1L);
 
     }
